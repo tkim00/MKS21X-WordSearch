@@ -7,6 +7,9 @@ public class WordSearch{
      *@param col is the starting width of the WordSearch
      */
     public WordSearch(int rows,int cols){
+      if(rows<0||cols<0){
+        throw new IllegalArgumentException("rows or cols cannot be negative");
+      }
       data = new char[rows][cols];
       for(int x = 0; x < data.length; x++){
         for(int y = 0; y < data[x].length; y++){
@@ -17,6 +20,11 @@ public class WordSearch{
 
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
+      for(int x = 0; x < data.length; x++){
+        for(int y = 0; y < data[x].length; y++){
+          data[x][y] = '_';
+        }
+      }
     }
 
     /**Each row is a new line, there is a space between each letter
@@ -24,7 +32,14 @@ public class WordSearch{
      *separated by newlines.
      */
     public String toString(){
-      return "";
+      String grid = "";
+      for(int x = 0; x < data.length; x++){
+        for(int y = 0; y < data[x].length; y++){
+          grid += data[x][y] + " ";
+        }
+        grid += "\n";
+      }
+      return grid;
     }
 
 
