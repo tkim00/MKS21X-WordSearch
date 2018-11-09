@@ -55,6 +55,17 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
+      if(row<0||col<0||row>=data.length||word.length()>data[row].length-col){
+        return false;
+      }
+      for(int i = 0; i < word.length(); i++){
+        if(data[row][col+i] != word.charAt(i) && data[row][col+i] != '_'){
+          return false;
+        }
+      }
+      for(int i = 0; i < word.length(); i++){
+        data[row][col+i] = word.charAt(i);
+      }
       return true;
     }
 
@@ -70,6 +81,17 @@ public class WordSearch{
      *and the board is NOT modified.
      */
     public boolean addWordVertical(String word,int row, int col){
+      if(col<0||row<0||col>=data[row].length||word.length()>data.length-row){
+        return false;
+      }
+      for(int i = 0; i < word.length(); i++){
+        if(data[row+i][col] != word.charAt(i) && data[row+i][col] != '_'){
+          return false;
+        }
+      }
+      for(int i = 0; i < word.length(); i++){
+        data[row+i][col] = word.charAt(i);
+      }
       return true;
     }
     public boolean addWordDiagonal(String word, int row, int col){
