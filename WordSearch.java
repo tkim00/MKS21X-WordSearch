@@ -2,6 +2,10 @@ import java.util.*;
 import java.io.*;
 import java.lang.Math;
 public class WordSearch{
+  public static void main(String[] args) {
+    WordSearch puzzle = new WordSearch(15, 15, "words.txt");
+    System.out.println(puzzle);
+  }
     private char[][]data;
 
 //the random seed used to produce this WordSearch
@@ -40,6 +44,8 @@ public class WordSearch{
           data[x][y] = '_';
         }
       }
+      randgen = new Random();
+      addAllWords();
     }
     public WordSearch(int rows, int cols, String fileName, int randSeed){
       if(rows<0||cols<0){
@@ -107,7 +113,7 @@ public class WordSearch{
      *        false when: the word doesn't fit, OR  rowchange and colchange are both 0,
      *        OR there are overlapping letters that do not match
      */
-    public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
+    private boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
       if(rowIncrement==0 && colIncrement==0){
         return false;
       }
@@ -116,7 +122,7 @@ public class WordSearch{
       }
       int c = 0;
       if(rowIncrement!=0){
-        for(int x = row; x < data.length&&x>0; x += rowIncrement){//problem encountered
+        for(int x = row; x < data.length && x>0; x += rowIncrement){//problem encountered
           c++;
         }
         if(word.length()>c){
@@ -126,7 +132,7 @@ public class WordSearch{
         }
       }
       if(colIncrement!=0){
-        for(int y = col; y < data[row].length&&y>0; y += rowIncrement){//problem encountered
+        for(int y = col; y < data[row].length && y>0; y += colIncrement){//problem encountered
           c++;
         }
         if(word.length()>c){
@@ -149,6 +155,21 @@ public class WordSearch{
      *[ 1,0] would add downwards because (row+1), with no col change
      *[ 0,-1] would add towards the left because (col - 1), with no row change
      */
+    private void addAllWords(){
+      int rows = data.length;
+      int cols = data[0].length;
+      for(int j = 0; j < wordsToAdd.size(); j++){
+        if(wordsToAdd.get(j).length() > rows && wordsToAdd.get(j).length() > cols){
+          wordsAdded.add(wordsToAdd.remove(j));
+        }
+      }
+      for(int i = 0; i < 1000 && wordsToAdd.size() != 0; i++){
+        int x = Math.abs(randgen.nextInt()%wordsToAdd.size());
+        if(addWord(wordsToAdd.get(x), Math.abs(randgen.nextInt()%rows), Math.abs(randgen.nextInt()%cols), randgen.nextInt()%2, randgen.nextInt()%2)){
+          wordsAdded.add(wordsToAdd.remove(x));
+        }
+      }
+    }
 
 
 
