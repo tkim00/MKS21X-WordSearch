@@ -44,7 +44,8 @@ public class WordSearch{
           data[x][y] = '_';
         }
       }
-      randgen = new Random();
+      seed = (int)(Math.random()*10000);
+      randgen = new Random(seed);
       addAllWords();
     }
     public WordSearch(int rows, int cols, String fileName, int randSeed){
@@ -164,9 +165,17 @@ public class WordSearch{
         }
       }
       for(int i = 0; i < 1000 && wordsToAdd.size() != 0; i++){
-        int x = Math.abs(randgen.nextInt()%wordsToAdd.size());
-        if(addWord(wordsToAdd.get(x), Math.abs(randgen.nextInt()%rows), Math.abs(randgen.nextInt()%cols), randgen.nextInt()%2, randgen.nextInt()%2)){
-          wordsAdded.add(wordsToAdd.remove(x));
+        int x = Math.abs(randgen.nextInt()%wordsToAdd.size());//for word
+        int y = randgen.nextInt()%2;//for row
+        int z = randgen.nextInt()%2;//for column
+        for(int j = 0; j < 100; j++){
+          if(y == 0 && z == 0){
+            j = 99;
+          }
+          if(addWord(wordsToAdd.get(x), Math.abs(randgen.nextInt()%rows), Math.abs(randgen.nextInt()%cols), y, z)){
+            wordsAdded.add(wordsToAdd.remove(x));
+            j = 99;
+          }
         }
       }
     }
