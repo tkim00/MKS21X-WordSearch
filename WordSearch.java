@@ -64,6 +64,13 @@ public class WordSearch{
       seed = (int)(Math.random()*10000);
       randgen = new Random(seed);
       addAllWords();
+      for(int x = 0; x < data.length; x++){
+        for(int y = 0; y < data[x].length; y++){
+          if(data[x][y] == '_'){
+            data[x][y] = (char)(randgen.nextInt(26) + 'a');
+          }
+        }
+      }
     }
     public WordSearch(int rows, int cols, String fileName, int randSeed){
       seed = randSeed;
@@ -183,7 +190,8 @@ public class WordSearch{
       int cols = data[0].length;
       for(int j = 0; j < wordsToAdd.size(); j++){
         if(wordsToAdd.get(j).length() > rows && wordsToAdd.get(j).length() > cols){
-          wordsAdded.add(wordsToAdd.remove(j));
+          wordsToAdd.remove(j);
+          wordsAdded.add("");
         }
       }
       for(int i = 0; i < 1000 && wordsToAdd.size() != 0; i++){
