@@ -12,7 +12,7 @@ public class WordSearch{
         System.out.println(puzzle);
       }
       if(args.length == 4){
-        WordSearch puzzle = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
+        WordSearch puzzle = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
         System.out.println(puzzle);
       }
       if(args.length == 5){
@@ -97,6 +97,13 @@ public class WordSearch{
       }
       randgen = new Random(seed);
       addAllWords();
+      for(int x = 0; x < data.length; x++){
+        for(int y = 0; y < data[x].length; y++){
+          if(data[x][y] == '_'){
+            data[x][y] = (char)(randgen.nextInt(26) + 'a');
+          }
+        }
+      }
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
