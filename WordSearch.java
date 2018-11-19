@@ -3,8 +3,25 @@ import java.io.*;
 import java.lang.Math;
 public class WordSearch{
   public static void main(String[] args) {
-    WordSearch puzzle = new WordSearch(15, 15, "words.txt");
-    System.out.println(puzzle);
+    try{
+      if(args.length < 3){
+        throw new IllegalArgumentException("insufficient information");
+      }
+      if(args.length == 3){
+        WordSearch puzzle = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
+        System.out.println(puzzle);
+      }
+      if(args.length == 4){
+        WordSearch puzzle = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
+        System.out.println(puzzle);
+      }
+      if(args.length == 5){
+        WordSearch puzzle = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
+        System.out.println(puzzle);
+      }
+    }catch(IllegalArgumentException e){
+      System.out.println("Rows or cols cannot be negative. Seed has to be from 0 to 10000. More than 2 arguments are necessary.");
+    }
   }
     private char[][]data;
 
@@ -49,8 +66,12 @@ public class WordSearch{
       addAllWords();
     }
     public WordSearch(int rows, int cols, String fileName, int randSeed){
+      seed = randSeed;
       if(rows<0||cols<0){
         throw new IllegalArgumentException("rows or cols cannot be negative");
+      }
+      if(seed < 0 || seed > 10000){
+        throw new IllegalArgumentException("seed not within valid range. Has to be from 0 to 10000 inclusive.");
       }
       try{
         File f = new File(fileName);
@@ -61,13 +82,14 @@ public class WordSearch{
       }catch(FileNotFoundException e){
          System.out.println("File not found: " + fileName);
       }
-      seed = randSeed;
       data = new char[rows][cols];
       for(int x = 0; x < data.length; x++){
         for(int y = 0; y < data[x].length; y++){
           data[x][y] = '_';
         }
       }
+      randgen = new Random(seed);
+      addAllWords();
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
